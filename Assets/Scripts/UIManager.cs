@@ -22,5 +22,7 @@ public class UIManager : MonoBehaviour
         {            
             textMeshProUGUI.text += "Name: " + playersObj.players[i].name + ", Age: " + playersObj.players[i].age + ", Score: " + playersObj.players[i].score + "\n";
         }
+        // to insert a new player, just call the function with the data
+        //dataManager.InsertData("Eddie", "37", "999");
     }
 }
