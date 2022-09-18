@@ -3,12 +3,17 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// @author: https://github.com/Eduardo-Gonelli
+/// Last Update: 2022/09/18
+/// </summary>
+
 public class DataManager : MonoBehaviour
 {
     // use the server path of your json file here
     private string url = "http://localhost/senac_aulas/senac_aulas_exemplos/grad_gsd/ex_json_php/data.json";
     public string json;
-    public byte[] data;
+    //public byte[] data;
     
     void Start()
     {
@@ -38,7 +43,7 @@ public class DataManager : MonoBehaviour
             json = www.downloadHandler.text;
             //Debug.Log(json);
             // results as binary data
-            data = www.downloadHandler.data;
+            // data = www.downloadHandler.data;
             SceneManager.LoadScene("Main");
         }
     }

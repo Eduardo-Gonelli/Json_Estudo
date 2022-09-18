@@ -11,8 +11,9 @@ public class UIManager : MonoBehaviour
         // retrieves the persistent DataManager object
         dataManager = FindObjectOfType<DataManager>();
         // Unity's JsonUtility only supports objects like top-level nodes,
-        // so we access the root object identified with square brackets in the JSON file.
+        // so we have to access the root object identified with square brackets in the JSON file.
         // From Bunny83: https://answers.unity.com/questions/1503047/json-must-represent-an-object-type.html
+        // the value "players" links each player with PlayerRootObject.players 
         playersObj = JsonUtility.FromJson<PlayerRootObject>("{\"players\":" + dataManager.json + "}");
         // reset the UI text
         textMeshProUGUI.text = "";
