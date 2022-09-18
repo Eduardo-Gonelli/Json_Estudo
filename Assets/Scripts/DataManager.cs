@@ -12,6 +12,8 @@ public class DataManager : MonoBehaviour
 {
     // use the server path of your json file here
     private string url = "http://localhost/senac_aulas/senac_aulas_exemplos/grad_gsd/ex_json_php/data.json";
+    // if you have a file that handle the json insert, use here
+    private string url_send_data = "http://localhost/senac_aulas/senac_aulas_exemplos/grad_gsd/ex_json_php/json_adicionar.php";
     public string json;
     //public byte[] data;
     
@@ -45,6 +47,34 @@ public class DataManager : MonoBehaviour
             // results as binary data
             // data = www.downloadHandler.data;
             SceneManager.LoadScene("Main");
+        }
+    }
+
+    // insert new player in json file
+    public void InsertData(string name, string age, string score)
+    {
+        StartCoroutine(InsertNewData(name, age, score));
+    }
+
+    IEnumerator InsertNewData(string name, string age, string score)
+    {
+        // these form are send to the create json file by POST
+        WWWForm form = new WWWForm();
+        form.AddField("nome", name);
+        form.AddField("idade", age);
+        form.AddField("pontos", score);
+
+        using(UnityWebRequest www = UnityWebRequest.Post(url_send_data, form))
+        {
+            yield return www.SendWebRequest();
+            if(www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                Debug.Log("New data inserted.");
+            }
         }
     }
 }
