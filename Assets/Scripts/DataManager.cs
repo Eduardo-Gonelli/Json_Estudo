@@ -5,29 +5,32 @@ using UnityEngine.SceneManagement;
 
 /// <summary>
 /// @author: https://github.com/Eduardo-Gonelli
-/// Last Update: 2022/09/18
+/// Last Update: 2023/09/17
 /// </summary>
 
 public class DataManager : MonoBehaviour
 {
     // use the server path of your json file here
-    private string url = "http://localhost/senac_aulas/senac_aulas_exemplos/grad_gsd/ex_json_php/data.json";
+    private string url_load_data = "http://localhost/senac_aulas/gsd2023/03_sistema/recuperar.php";
     // if you have a file that handle the json insert, use here
-    private string url_send_data = "http://localhost/senac_aulas/senac_aulas_exemplos/grad_gsd/ex_json_php/json_adicionar.php";
+    private string url_send_data = "http://localhost/senac_aulas/gsd2023/03_sistema/adicionar.php";
     public string json;
     //public byte[] data;
     
     void Start()
+    {        
+        DontDestroyOnLoad(this); // persists the data
+    }
+
+    public void LoadData()
     {
-        // persists the data
-        DontDestroyOnLoad(this);
         StartCoroutine("LoadDataFromJson");
     }
 
     IEnumerator LoadDataFromJson()
     {
         // load data from file
-        UnityWebRequest www = UnityWebRequest.Get(url);
+        UnityWebRequest www = UnityWebRequest.Get(url_load_data);
         // bypass https security (for http only if your server do not support https)
         www.certificateHandler = new ByPassHTTPSCertificate();
         // wait for page response
