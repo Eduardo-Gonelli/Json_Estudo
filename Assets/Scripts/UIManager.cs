@@ -50,7 +50,7 @@ public class UIManager : MonoBehaviour
         // Então precisamos acessar o objeto raiz identificado com colchetes no arquivo JSON.
         // Exemplo de Bunny83: https://answers.unity.com/questions/1503047/json-must-represent-an-object-type.html        
         // o valor "players" liga cada jogador com PlayerRootObject.players
-        playersObj = JsonUtility.FromJson<PlayerRootObject>("{\"players\":" + json + "}");        
+        playersObj = JsonUtility.FromJson<PlayerRootObject>("{\"players\":" + json + "}");
         // atualiza a ui com os dados novos
         for(int i = 0; i < playersObj.players.Length; i++)
         {
