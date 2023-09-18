@@ -8,6 +8,6 @@ Os arquivos de apoio devem ser colocados, descompactados em uma pasta pública d
 O formato esperado do json é:
 [{"apelido":"valor","pontos":"valor", "data","valor"}, {...}]
 
-Após o projeto WEB ter criado o arquivo data.json, atualize as variáveis url_send_data para o endereço localhost onde está o arquivo atualizar.php; Atualize a variável url_load_data para o endereço localhost onde está o arquivo recuperar.php.
+Após o projeto WEB ter criado o arquivo data.json, atualize, no script DataManager.cs, as variáveis url_send_data para o endereço localhost onde está o arquivo atualizar.php; Atualize a variável url_load_data para o endereço localhost onde está o arquivo recuperar.php.
 
 Carregue a cena Main no projeto e, ao dar o "Play", você poderá ser capaz de cadastrar novos apelidos e recupeara os dados.
