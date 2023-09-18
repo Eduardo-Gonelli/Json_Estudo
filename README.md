@@ -1,16 +1,13 @@
 # Unity_Json
-Simple project made in unity to retrieve json data from a server and load it into a UI.
+Este projeto feito na Unity trata-se de um exemplo de como utilizar a Unity para conectar a serviços PHP, carregar dados de um arquivo JSON e exibir na UI.
 
-To use the project you need to create a json file with the format:
+Para usar o projeto você pode utilizar os arquiovos de apoio que estão na pasta Assets do projeto.
 
-[{"name":"value","age":"value","score":"value"},{"name":"value","age":"value","score":"value "}]
+Os arquivos de apoio devem ser colocados, descompactados em uma pasta pública do seu servidor local (se utilizar o XAMPP, criar uma pasta para inserir os arquivos dentro de htdocs)
 
-Enter as many names, ages and scores elements as you like.
+O formato esperado do json é:
+[{"apelido":"valor","pontos":"valor", "data","valor"}, {...}]
 
-In the DataManager file, change the url variable to the location where your .json file is saved.
+Após o projeto WEB ter criado o arquivo data.json, atualize as variáveis url_send_data para o endereço localhost onde está o arquivo atualizar.php; Atualize a variável url_load_data para o endereço localhost onde está o arquivo recuperar.php.
 
-Start play from the PersistentData scene.
-
-The Main scene will display the data from the json file in a TextMeshProGUI text. 
-
-Ps. To send a data to a json file on the server, you have to create a service that receive that data by POST methot.
+Carregue a cena Main no projeto e, ao dar o "Play", você poderá ser capaz de cadastrar novos apelidos e recupeara os dados.
