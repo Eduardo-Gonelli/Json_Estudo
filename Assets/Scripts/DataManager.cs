@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
 
 /// <summary>
 /// @author: https://github.com/Eduardo-Gonelli
@@ -10,63 +9,68 @@ using UnityEngine.SceneManagement;
 
 public class DataManager : MonoBehaviour
 {
-    // use the server path of your json file here
+    // evento para carregar os dados
+    public delegate void OnDataLoaded(string jsonData);
+    public static event OnDataLoaded onDataLoaded;
+
+    // url para receber os dados
     private string url_load_data = "http://localhost/senac_aulas/gsd2023/03_sistema/recuperar.php";
-    // if you have a file that handle the json insert, use here
+    // url para enviar os dados
     private string url_send_data = "http://localhost/senac_aulas/gsd2023/03_sistema/adicionar.php";
     public string json;
-    //public byte[] data;
-    
+        
     void Start()
     {        
-        DontDestroyOnLoad(this); // persists the data
+        DontDestroyOnLoad(this); // não destroi o objeto ao trocar de cena        
     }
 
     public void LoadData()
     {
         StartCoroutine("LoadDataFromJson");
+        
     }
 
     IEnumerator LoadDataFromJson()
-    {
-        // load data from file
-        UnityWebRequest www = UnityWebRequest.Get(url_load_data);
-        // bypass https security (for http only if your server do not support https)
+    {        
+        WWWForm form = new WWWForm();
+        // adiciona o campo da chave secreta
+        form.AddField("chave_secreta", "123456");
+        // prepara a requisição
+        UnityWebRequest www = UnityWebRequest.Post(url_load_data, form);
+        // ignora o certificado de segurança https (para http apenas se o servidor não suportar https)        
         www.certificateHandler = new ByPassHTTPSCertificate();
-        // wait for page response
+        // envia a requisição e aguarda pela resposta        
         yield return www.SendWebRequest();
-        // if the page do not laod
+        // verifica se houve erro na requisição
         if(www.result != UnityWebRequest.Result.Success)
         {
-            // handle the error
+            // exibe o erro
             Debug.Log(www.error);
         }
         else
         {
-            // example from https://stackoverflow.com/questions/66683347/parsing-json-from-api-url-in-unity-via-c-sharp by Art Zolina III
-            // get results as text
+            // exemplo de https://stackoverflow.com/questions/66683347/parsing-json-from-api-url-in-unity-via-c-sharp por Art Zolina III
+            // transforma o resultado em um objeto json
             json = www.downloadHandler.text;
-            //Debug.Log(json);
-            // results as binary data
-            // data = www.downloadHandler.data;
-            SceneManager.LoadScene("Main");
+            // Debug.Log(json);
+            onDataLoaded?.Invoke(json);
         }
     }
 
-    // insert new player in json file
-    public void InsertData(string name, string age, string score)
+    // prepara a inserção de dados
+    public void InsertData(string apelido, int pontos)
     {
-        StartCoroutine(InsertNewData(name, age, score));
+        StartCoroutine(InsertNewData(apelido, pontos));
     }
 
-    IEnumerator InsertNewData(string name, string age, string score)
+    // envia o formulário para o servidor
+    IEnumerator InsertNewData(string apelido, int pontos)
     {
-        // these form are send to the create json file by POST
+        // prepara o formulário
         WWWForm form = new WWWForm();
-        form.AddField("nome", name);
-        form.AddField("idade", age);
-        form.AddField("pontos", score);
-
+        form.AddField("apelido", apelido);        
+        form.AddField("pontos", pontos);        
+        // envia o formulário para o servidor
         using(UnityWebRequest www = UnityWebRequest.Post(url_send_data, form))
         {
             yield return www.SendWebRequest();
@@ -76,7 +80,7 @@ public class DataManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("New data inserted.");
+                Debug.Log("Novos dados inseridos");
             }
         }
     }
