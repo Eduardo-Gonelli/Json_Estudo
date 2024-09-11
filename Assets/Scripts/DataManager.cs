@@ -14,9 +14,9 @@ public class DataManager : MonoBehaviour
     public static event OnDataLoaded onDataLoaded;
 
     // url para receber os dados
-    private string url_load_data = "http://localhost/senac_aulas/gsd2023/03_sistema/recuperar.php";
+    private string url_load_data = "http://localhost/gsd_a5/03_sistema/recuperar.php";
     // url para enviar os dados
-    private string url_send_data = "http://localhost/senac_aulas/gsd2023/03_sistema/adicionar.php";
+    private string url_send_data = "http://localhost/gsd_a5/03_sistema/adicionar.php";
     public string json;
         
     void Start()

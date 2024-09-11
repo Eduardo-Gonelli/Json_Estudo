@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -52,11 +53,20 @@ public class UIManager : MonoBehaviour
         // o valor "players" liga cada jogador com PlayerRootObject.players
         playersObj = JsonUtility.FromJson<PlayerRootObject>("{\"players\":" + json + "}");
         // atualiza a ui com os dados novos
-        for(int i = 0; i < playersObj.players.Length; i++)
+        // reseta o texto do textMeshProUGUI
+        textMeshProUGUI.text = "";
+        // cria um novo textMeshProUGUI para cada jogador
+        if (contentScroll.transform.childCount > 0)
         {
-            // reseta o texto do textMeshProUGUI
-            textMeshProUGUI.text = "";
-            // cria um novo textMeshProUGUI para cada jogador
+            // Usa um loop invertido para garantir que todos os filhos sejam destruídos corretamente
+            for (int i = contentScroll.transform.childCount - 1; i >= 0; i--)
+            {
+                Destroy(contentScroll.transform.GetChild(i).gameObject);
+            }
+        }
+        for (int i = 0; i < playersObj.players.Length; i++)
+        {
+            
             TMPro.TextMeshProUGUI newTMP = Instantiate(textMeshProUGUI, contentScroll.transform);
             newTMP.text += "Apelido: " + 
                 playersObj.players[i].apelido + 
