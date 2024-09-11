@@ -4,7 +4,7 @@ using UnityEngine.Networking;
 
 /// <summary>
 /// @author: https://github.com/Eduardo-Gonelli
-/// Last Update: 2023/09/18
+/// Last Update: 2024/09/11
 /// </summary>
 
 public class DataManager : MonoBehaviour

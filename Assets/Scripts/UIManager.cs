@@ -1,6 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// @author: https://github.com/Eduardo-Gonelli
+/// Last Update: 2024/09/11
+/// </summary>
+
 public class UIManager : MonoBehaviour
 {
     DataManager dataManager;
@@ -26,6 +31,11 @@ public class UIManager : MonoBehaviour
     public void SalvaNovosDados()
     {
         // chama o método InsertData passando o apelido do jogador e a pontuação
+        if (inputFieldPlayer.text == "" || inputFieldScore.text == "")
+        {
+            Debug.Log("Os dados não foram preenchidos corretamente.");
+            return;
+        }
         dataManager.InsertData(inputFieldPlayer.text, int.Parse(inputFieldScore.text)); 
         // aguarda 1 segundo e carrega os dados novamente
         Invoke("CarregarDados", 1f);
@@ -55,15 +65,16 @@ public class UIManager : MonoBehaviour
         // atualiza a ui com os dados novos
         // reseta o texto do textMeshProUGUI
         textMeshProUGUI.text = "";
-        // cria um novo textMeshProUGUI para cada jogador
+        // limpa a lista de textos adicionados em todas as atualizações
         if (contentScroll.transform.childCount > 0)
         {
-            // Usa um loop invertido para garantir que todos os filhos sejam destruídos corretamente
+            // usa um loop invertido para garantir que todos os filhos sejam destruídos corretamente
             for (int i = contentScroll.transform.childCount - 1; i >= 0; i--)
             {
                 Destroy(contentScroll.transform.GetChild(i).gameObject);
             }
         }
+        // cria um novo textMeshProUGUI para cada jogador
         for (int i = 0; i < playersObj.players.Length; i++)
         {
             
